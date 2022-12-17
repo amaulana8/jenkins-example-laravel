@@ -20,7 +20,7 @@ pipeline {
         sh 'echo $HEROKU_API_KEY | docker login --username=_ --password-stdin http://nexus-lb.nexus.scv.cluster.local'
       }
     }
-    stage('Push to Heroku registry') {
+    stage('Push to Nexus registry') {
       steps {
         sh '''
           docker tag $IMAGE_NAME:$IMAGE_TAG nexus-lb.nexus.scv.cluster.local/$APP_NAME/web
