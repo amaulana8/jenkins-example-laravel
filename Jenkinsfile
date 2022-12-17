@@ -4,7 +4,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    HEROKU_API_KEY = credentials('nexus-registry-uspas')
+    HEROKU_API_KEY = credentials('nexus-pass')
     IMAGE_NAME = 'darinpope/jenkins-example-laravel'
     IMAGE_TAG = 'latest'
     APP_NAME = 'jenkins-example-laravel'
