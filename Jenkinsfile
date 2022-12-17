@@ -4,7 +4,7 @@ pipeline {
     buildDiscarder(logRotator(numToKeepStr: '5'))
   }
   environment {
-    HEROKU_API_KEY = credentials('heroku-api-key')
+    HEROKU_API_KEY = credentials('nexus-registry-uspas')
     IMAGE_NAME = 'darinpope/jenkins-example-laravel'
     IMAGE_TAG = 'latest'
     APP_NAME = 'jenkins-example-laravel'
@@ -17,14 +17,14 @@ pipeline {
     }
     stage('Login') {
       steps {
-        sh 'echo $HEROKU_API_KEY | docker login --username=_ --password-stdin registry.heroku.com'
+        sh 'echo $HEROKU_API_KEY | docker login --username=_ --password-stdin http://nexus-lb.nexus.scv.cluster.local'
       }
     }
     stage('Push to Heroku registry') {
       steps {
         sh '''
-          docker tag $IMAGE_NAME:$IMAGE_TAG registry.heroku.com/$APP_NAME/web
-          docker push registry.heroku.com/$APP_NAME/web
+          docker tag $IMAGE_NAME:$IMAGE_TAG nexus-lb.nexus.scv.cluster.local/$APP_NAME/web
+          docker push nexus-lb.nexus.scv.cluster.local/$APP_NAME/web
         '''
       }
     }
